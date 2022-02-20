@@ -6,34 +6,179 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
 </head>
 
 <body>
     <div class="darkThemem" id="myroot">
         <div id="bar1">
-            <select class="selectbox">
-                <option value="Object Mode"><p>Object Mode</p></option>
-                <option value="Edit Mode"><p>Edit Mode</p></option>
-                <option value="Sculpt Mode"><p>Sculpt Mode</p></option>
-                <option value="Vertex Paint"><p>Vertex Paint</p></option>
-                <option value="Weight Paint"><p>Weight Paint</p></option>
-                <option value="Texture Paint"><p>Texture Paint</p></option>
-            </select>
+            <div class="bar1div">
+                <select class="selectbox">
+                    <option value="Object Mode">
+                        <p>Object Mode</p>
+                    </option>
+                    <option value="Edit Mode">
+                        <p>Edit Mode</p>
+                    </option>
+                    <option value="Sculpt Mode">
+                        <p>Sculpt Mode</p>
+                    </option>
+                    <option value="Vertex Paint">
+                        <p>Vertex Paint</p>
+                    </option>
+                    <option value="Weight Paint">
+                        <p>Weight Paint</p>
+                    </option>
+                    <option value="Texture Paint">
+                        <p>Texture Paint</p>
+                    </option>
+                </select>
+                <div class="bar1menu">View</div>
+                <div class="bar1menu">Select</div>
+                <div class="bar1menu">Add</div>
+                <div class="bar1menu">Object</div>
+
+            </div>
+            
         </div>
+
     </div>
 </body>
+<!--  self defined right click menu -->
+
+<body>
+    <ul class="menu" id="menu">
+        <li><a href="###">复制</a></li>
+        <li><a href="###">粘贴</a></li>
+        <li><a href="###">剪切</a></li>
+        <li><a href="###">刷新</a></li>
+    </ul>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu {
+            width: 100px;
+            border: 1px solid #ccc;
+            position: absolute;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+            padding: 10px 0;
+            transition: all .1s ease;
+        }
+
+        .menu li {
+            list-style: none;
+            width: 100%;
+        }
+
+        .menu li a {
+            display: inline-block;
+            text-decoration: none;
+            color: #555;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .menu li:first-of-type {
+            border-radius: 5px 5px 0 0;
+        }
+
+        .menu li a:hover,
+        .menu li a:active {
+            background: #eee;
+            color: #0AAF88;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            //获取可视区宽度
+            var winWidth = function () {
+                return document.documentElement.clientWidth || document.body.clientWidth;
+            }
+            //获取可视区高度
+            var winHeight = function () {
+                return document.documentElement.clientHeight || document.body.clientHeight;
+            }
+            var menu = document.getElementById('menu');
+            menu.style.display = 'none';
+            document.addEventListener('click', function () {
+                menu.style.display = 'none';
+            })
+            menu.addEventListener('click', function (event) {
+                var event = event || window.event;
+                event.cancelBubble = true;
+            })
+            //右键菜单
+            document.oncontextmenu = function (event) {
+                var event = event || window.event;
+                menu.style.display = 'block';
+                var l, t;
+                l = event.clientX;
+                t = event.clientY;
+                if (l >= (winWidth() - menu.offsetWidth)) {
+                    l = winWidth() - menu.offsetWidth;
+                } else {
+                    l = l
+                }
+                if (t > winHeight() - menu.offsetHeight) {
+                    t = winHeight() - menu.offsetHeight;
+                } else {
+                    t = t;
+                }
+                menu.style.left = l + 'px';
+                menu.style.top = t + 'px';
+                return false;
+            }
+        }
+    </script>
+</body>
+
+<!-- self defined right click menu -->
+<script>
+
+
+    hotkeys('shift+a,ctrl+b,r,f', function (event, handler) {
+        switch (handler.key) {
+            case 'shift+a':
+                alert('you pressed ctrl+a!');
+                break;
+            case 'ctrl+b': alert('you pressed ctrl+b!');
+                break;
+            case 'r': alert('you pressed r!');
+                break;
+            case 'f': alert('you pressed f!');
+                break;
+            default: alert(event);
+        }
+    });
+
+
+</script>
 <style>
-    .darkThemem{
+    .darkThemem {
         background-color: hsla(0, 0%, 0%, 0.7);
+        color: hsla(0, 0%, 100%, 0.7);
     }
-    .selectbox{
+
+    .selectbox {
         background-color: hsla(0, 0%, 0%, 0.7);
         color: hsla(0, 0%, 100%, 0.7);
         margin: 0.2%;
         border-radius: 5px;
     }
-    .selectbox option{
+
+    .selectbox option {
         color: hsla(0, 0%, 100%, 0.7);
+    }
+
+    .bar1div {
+        display: flex;
+    }
+    .bar1menu{
+        margin: 0.2%;
     }
 </style>
 
